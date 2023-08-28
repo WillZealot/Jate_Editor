@@ -15,11 +15,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "core-js": "^3.32.1",
     "express": "^4.17.1",
     "if-env": "^1.0.4"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.4"
   }
 }
