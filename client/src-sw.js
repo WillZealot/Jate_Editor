@@ -26,5 +26,19 @@ warmStrategyCache({
 
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
-// TODO: Implement asset caching
-registerRoute();
+// Implemented asset caching
+registerRoute(
+  /\.(txt|docx|pdf|html)$/, // Include HTML files in the regex
+  new CacheFirst({
+    cacheName: 'text-content-cache',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [200],
+      }),
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+      }),
+    ],
+  })
+);
