@@ -28,7 +28,7 @@ registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
 // Implemented asset caching
 registerRoute(
-  /\.(txt|docx|pdf|html|png|jpe?g|gif)$/, // Include HTML files in the regex
+  /\.(txt|docx|pdf|html|png|jpe?g|gif|json)$/, // Include HTML files in the regex
   new CacheFirst({
     cacheName: 'asset-cache',
     plugins: [
