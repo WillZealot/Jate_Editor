@@ -11,7 +11,7 @@ module.exports = () => {
     mode: 'development',
     entry: {
       main: './src/js/index.js',
-      install: './src/js/install.js'
+      install: './src/js/install.js',
     },
     output: {
       filename: '[name].bundle.js',
@@ -28,19 +28,24 @@ module.exports = () => {
         swDest: 'src-sw.js',
       }), 
       new WebpackPwaManifest({
-        id: "/",
+        filename: 'manifest.json',
+        inject: true,
         name: 'Jate',
-        short_name: 'Jate',
+        short_name: 'J.A.T.E',
         description: 'Text Editor!',
-        background_color: '#7eb4e2',
-        theme_color: '#7eb4e2',
-        start_url: './',
+        background_color: '#225ca3',
+        theme_color: '#225ca3',
+        start_url: '/',
         publicPath: './',
-        icons: [
+        orientation: "portrait",
+        display: "standalone",
+        icons:[
           {
             src: path.resolve('src/images/logo.png'),
             sizes: [96, 128, 192, 256, 384, 512],
+            type: "image/png",
             destination: path.join('assets', 'icons'),
+            purpose: "any",
           },
         ],
       }),
@@ -64,6 +69,18 @@ module.exports = () => {
               plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
             },
           },
+        },
+        {
+          test: /\.(png|jpe?g|gif)$/i,
+          use: [
+            {
+              loader: 'file-loader', // You can also use 'asset/resource' for newer Webpack versions
+              options: {
+                name: '[name].[ext]', // Preserve the original filename
+                outputPath: 'assets/icons', // Output path relative to 'dist'
+              },
+            },
+          ],
         },
       ],
     },

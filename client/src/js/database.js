@@ -31,24 +31,7 @@ export const getDb = async () => {
   const tx = db.transaction('jate', 'readonly'); // Start a read-only transaction
   const store = tx.objectStore('jate'); // Get the object store
 
-  const contentArray = [];
-
-  return new Promise((resolve, reject) => {
-    const cursorRequest = store.openCursor();
-    cursorRequest.onsuccess = (event) => {
-      const cursor = event.target.result;
-      if (cursor) {
-        contentArray.push(cursor.value.content);
-        cursor.continue(); // Move to the next item
-      } else {
-        resolve(contentArray); // Resolve the promise when all items are processed
-      }
-    };
-
-    cursorRequest.onerror = (event) => {
-      reject(event.target.error); // Reject the promise if an error occurs
-    };
-  });
+  return store.getAll();
 };
 
 initdb();
