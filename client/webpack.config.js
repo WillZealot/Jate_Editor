@@ -30,7 +30,7 @@ module.exports = () => {
       new WebpackPwaManifest({
         filename: 'manifest.json',
         inject: true,
-        name: 'Jate',
+        name: 'Just Another Text Editor',
         short_name: 'J.A.T.E',
         description: 'Text Editor!',
         background_color: '#225ca3',
@@ -75,10 +75,6 @@ module.exports = () => {
           use: [
             {
               loader: 'file-loader', // You can also use 'asset/resource' for newer Webpack versions
-              options: {
-                name: '[name].[ext]', // Preserve the original filename
-                outputPath: 'assets/icons', // Output path relative to 'dist'
-              },
             },
           ],
         },
