@@ -22,7 +22,7 @@ https://supertexteditor-jate-47a351fbbe2f.herokuapp.com
 ![Alt text](2F242268-1714-40AE-A8EA-A4A663703605.jpeg)
 
 ## Tools
-Packages like babel, indexDb, concurrently, and etc... where used to create this app. 
+Packages like babel, indexDb, concurrently, express, if-env, code-mirror-themes, webpack, and etc... where used to create this app. (to see the full list just clone the project and look inside the package.json files)
 Javascript was the language used to code this app.
 
 ## Usage
