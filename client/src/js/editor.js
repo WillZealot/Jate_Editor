@@ -24,26 +24,28 @@ export default class {
 
     // When the editor is ready, set the value to whatever is stored in indexeddb.
     // Fall back to localStorage if nothing is stored in indexeddb, and if neither is available, set the value to header.
-    getDb().then((data) => {
-      console.info('Loaded data from IndexedDB, injecting into editor');
-      console.log('Retrieved data from IndexedDB:', data);
-    
-      // Select the content to display in the editor
-      const contentToDisplay = data.find(item => item.content !== null)?.content || localData || header;
-    
-      if (typeof contentToDisplay === 'string') {
-        this.editor.setValue(contentToDisplay);
-      } else {
-        console.error('Invalid content format:', contentToDisplay);
-      }
-    })
-    .catch((error) => {
-      console.error('Error retrieving or setting content:', error);
-    });
+    getDb()
+  .then((data) => {
+    console.info('Loaded data from IndexedDB, injecting into editor');
+    console.log('Retrieved data from IndexedDB:', data);
 
-    this.editor.on('change', () => {
-      localStorage.setItem('content', this.editor.getValue());
-    });
+    // Filter out null content and get the newest entry
+    const filteredData = data.filter(item => item.content !== null);
+    const newestEntry = filteredData.length > 0 ? filteredData[filteredData.length - 1].content : null;
+
+    if (newestEntry !== null) {
+      this.editor.setValue(newestEntry);
+    } else {
+      console.error('No valid content found in the database.');
+    }
+  })
+  .catch((error) => {
+    console.error('Error retrieving or setting content:', error);
+  });
+
+this.editor.on('change', () => {
+  localStorage.setItem('content', this.editor.getValue());
+});
 
     // Save the content of the editor when the editor itself is loses focus
     this.editor.on('blur', () => {
@@ -52,3 +54,8 @@ export default class {
     });
   }
 }
+
+// Save the content to localStorage when the page is about to unload (on refresh or close)
+window.addEventListener('beforeunload', () => {
+  putDb(localStorage.getItem('content'));
+});
