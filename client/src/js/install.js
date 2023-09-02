@@ -15,7 +15,6 @@ butInstall.addEventListener('click', async () => {
       }
       const result = await installPrompt.prompt();
       console.log(`Install prompt was: ${result.outcome}`);
-      disableInAppInstallPrompt();
 });
 
 // TODO: Add an handler for the `appinstalled` event
